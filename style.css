@@ -1,0 +1,22 @@
+h1{
+    color:#8a2be2
+}
+table {
+    border-spacing: 10px;
+    border-spacing: 10px;
+    border: black solid 2px;
+
+}
+.cell{
+    height: 70px;
+    width: 70px;
+    text-align: center;
+    background-color: pink;
+
+}
+.mine{
+    background-color: #8a2be2;
+}
+.isShown{
+    border-radius: 50px;
+}
