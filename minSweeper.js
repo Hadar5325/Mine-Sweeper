@@ -3,10 +3,13 @@
 var gBoard
 var gLevel
 var gGame
-var size = 4
 const EMPTY = '❤'
 const MINE = '💥'
-
+var optLevels =[
+    { SIZE: 4, MINES: 2 },
+    { SIZE : 8, MINES : 14},
+    { SIZE : 12, MINES : 32}
+]
 function initGame() {
     //model
     gGame = {
@@ -16,7 +19,10 @@ function initGame() {
         secsPassed: 0
     }
     gLevel = { SIZE: 4, MINES: 2 }
+    startGame()
+}
 
+function startGame(){
     gBoard = buildBoard()
     putOnBoardRanomMines()
     console.log(gBoard)
@@ -24,9 +30,22 @@ function initGame() {
     renderBoard()
     // see how many negs to each cell
     // allMineNegsInBoard()
-
     var randLocationsForMines = getRandomLocationsForAllMine()
     allCellAreShownExceptMinesCells()
+}
+
+function onWhichLevel(elBtn){
+    if(elBtn.classList.contains('begginer')){
+        gLevel.SIZE = optLevels[0].SIZE
+        gLevel.MINES = optLevels[0].MINES
+    }else if(elBtn.classList.contains('medium')){
+        gLevel.SIZE = optLevels[1].SIZE
+        gLevel.MINES = optLevels[1].MINES
+    }else{
+        gLevel.SIZE = optLevels[2].SIZE
+        gLevel.MINES = optLevels[2].MINES
+    }
+    startGame()
 }
 
 
@@ -48,44 +67,50 @@ function buildBoard() {
 }
 
 function expandShown(mat, elCell, cellI, cellJ) {
-    if (elCell.minesAroundCount === 0) {
+    // model
+    if(mat[cellI][cellJ].minesAroundCount === 0){
         var negsToExpandShown = []
-        negsToExpandShown = countNegsExpandShown(mat, cellI, cellJ)
+        negsToExpandShown = allPosNearCellWithZeroMine(mat, cellI, cellJ)
         var lengthNegs = negsToExpandShown.length
 
         for (var i = 0; i < lengthNegs; i++) {
+        
             // update model
             var row = negsToExpandShown[i].i
             var col = negsToExpandShown[i].j
-            var currentCell = gBoard[row][col]
-            currentCell.isShown = true
 
-            // to check
-            // //update model
-            // gBoard[cellI][cellJ].minesAroundCount = minesNegsCount
-            // gBoard[cellI][cellJ].isShown = true
-            
-    
-            // //update dom
-            // elCell.minesAroundCount = minesNegsCount
-            // elCell.innerText += minesNegsCount
-            // elCell.classList.add('isShown')
+            var currMinesNegsCount = counterMinesNegs(gBoard, row, col)
+            gBoard[row][col].minesAroundCount = currMinesNegsCount
+            gBoard[row][col].isShown = true
 
             // update dom
-            console.log(gBoard)
             var pos = { row, col }
-            renderCell(pos, 'isShown')
+            renderCell(pos, 'isShown', currMinesNegsCount)
         }
     }
 }
 
-function renderCell(pos, value) {
+function renderCell(pos, value,currMinesNegsCount) {
     const elCell = document.querySelector(`.cell-${pos.row}-${pos.col}`);
     elCell.classList.add(value);
+    elCell.innerText = currMinesNegsCount
 }
 
 
-function countNegsExpandShown(mat, cellI, cellJ) {
+function counterMinesNegs(mat, cellI, cellJ) {
+    var negsCount = 0
+    for (var i = cellI - 1; i <= cellI + 1; i++) {
+        if (i < 0 || i >= mat.length) continue
+        for (var j = cellJ - 1; j <= cellJ + 1; j++) {
+            if (i === cellI && j === cellJ) continue
+            if (j < 0 || j >= mat[i].length) continue
+            if (mat[i][j].isMine) negsCount++
+        }
+    }
+    return negsCount
+}
+
+function allPosNearCellWithZeroMine(mat, cellI, cellJ) {
     var negsCount = []
     var counter = 0
     for (var i = cellI - 1; i <= cellI + 1; i++) {
@@ -107,9 +132,9 @@ function putOnBoardRanomMines() {
     }
 }
 
-function startGame(){
+// function startGame(){
 
-}
+// }
 
 // send to sort 
 //objs.sort((a,b) => a.last_nom - b.last_nom);
@@ -206,7 +231,7 @@ function WhichButton(event,i,j) {
 function allMineNegsInBoard() {
     for (var i = 0; i < gLevel.SIZE; i++) {
         for (var j = 0; j < gLevel.SIZE; j++) {
-            var currMinesArounCount = countNegs(gBoard, i, j)
+            var currMinesArounCount = counterMinesNegs(gBoard, i, j)
             gBoard[i][j].minesAroundCount = currMinesArounCount
         }
     }
@@ -216,14 +241,15 @@ function allMineNegsInBoard() {
 
 
 function cellClicked(elCell, cellI, cellJ) {
+    // update the current cell
     setMinesNegsCount(elCell, cellI, cellJ)
+    // update the negs around elCell
     expandShown(gBoard, elCell, cellI, cellJ)
 }
 
 
 function setMinesNegsCount(elCell, cellI, cellJ) {
-    var minesNegsCount = countNegs(gBoard, cellI, cellJ)
-
+    var minesNegsCount = counterMinesNegs(gBoard, cellI, cellJ)
     // set the number of negs of clicked cell
     //update model
     gBoard[cellI][cellJ].minesAroundCount = minesNegsCount
@@ -231,24 +257,8 @@ function setMinesNegsCount(elCell, cellI, cellJ) {
     
     
     //update dom
-    elCell.minesAroundCount = minesNegsCount
-    elCell.innerText += minesNegsCount
+    elCell.innerText = minesNegsCount
     elCell.classList.add('isShown')
-}
-
-
-
-function countNegs(mat, cellI, cellJ) {
-    var negsCount = 0
-    for (var i = cellI - 1; i <= cellI + 1; i++) {
-        if (i < 0 || i >= mat.length) continue
-        for (var j = cellJ - 1; j <= cellJ + 1; j++) {
-            if (i === cellI && j === cellJ) continue
-            if (j < 0 || j >= mat[i].length) continue
-            if (mat[i][j].isMine) negsCount++
-        }
-    }
-    return negsCount
 }
 
 function getRandomLocationsForAllMine() {

@@ -1,6 +1,6 @@
 body {
-    max-width: 500px;
-    margin: auto;
+    /* max-width: 500px; */
+    /* margin: auto; */
     background-image: url(image.jfif);
     background-position: center center;
     background-size: cover;
@@ -13,6 +13,7 @@ h1{
     text-transform: uppercase;
 }
 .start{
+    padding: 12px;
     border-radius: 50px;
     font-size: 30px;
     background-color: black;
@@ -29,13 +30,12 @@ h1{
 }
 table {
     border-spacing: 10px;
-    border-spacing: 10px;
     border: black solid 2px;
 
 }
 .cell{
-    height: 70px;
-    width: 70px;
+    height: 50px;
+    width: 50px;
     text-align: center;
     background-color: pink;
 
