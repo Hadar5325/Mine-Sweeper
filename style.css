@@ -1,5 +1,31 @@
+body {
+    max-width: 500px;
+    margin: auto;
+    background-image: url(image.jfif);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
 h1{
-    color:#8a2be2
+    color:#f1eaf7;
+    font-size: 50px;
+    font-family: 'Open Sans Condensed';
+    text-transform: uppercase;
+}
+.start{
+    border-radius: 50px;
+    font-size: 30px;
+    background-color: black;
+    color:#f1eaf7;
+    margin-bottom: 25px;
+}
+.level{
+    border-radius: 50px;
+    color:#f1eaf7;
+    margin: auto;
+    background-color: black;
+    font-size: 20px;
+    margin: 10px;
 }
 table {
     border-spacing: 10px;
@@ -19,4 +45,8 @@ table {
 }
 .isShown{
     border-radius: 50px;
+}
+
+.isMarked{
+    color:chocolate;
 }
