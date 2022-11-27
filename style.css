@@ -1,16 +1,43 @@
 body {
     /* max-width: 500px; */
     /* margin: auto; */
-    background-image: url(image.jfif);
+    background-image: url(./images/viewImage.jfif);
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
 }
-h1{
+.div-containter{
+    display: flex;
+    place-content: center;
+    margin: 15px;
+}
+
+h1 ,.game-over, .footer{
+    text-align: center;
     color:#f1eaf7;
     font-size: 50px;
     font-family: 'Open Sans Condensed';
     text-transform: uppercase;
+}
+
+.game-over{
+    font-size: 25px;
+}
+
+.safe-click, .seven-boom{
+    height: 63px;
+    width: 63px;
+    border: solid;
+}
+.footer{
+    border-top-style: outset;
+    font-size: 15px;
+}
+.smiley{
+    height: 70px;
+    width: 70px;
+    cursor: pointer;
+
 }
 .start{
     padding: 12px;
@@ -19,34 +46,54 @@ h1{
     background-color: black;
     color:#f1eaf7;
     margin-bottom: 25px;
+    margin-right: 20px;
+    cursor: pointer;
+
 }
-.level{
+.level, .safe-click{
     border-radius: 50px;
     color:#f1eaf7;
-    margin: auto;
     background-color: black;
     font-size: 20px;
     margin: 10px;
+    cursor: pointer;
+
+}
+.seven-boom{
+    border-radius: 50px;
+    background-color: black;
+    color:#f1eaf7;
 }
 table {
     border-spacing: 10px;
     border: black solid 2px;
-
 }
 .cell{
     height: 50px;
     width: 50px;
     text-align: center;
     background-color: pink;
+    color: black;
+    font-size: 23px;
+    font-family: 'Open Sans Condensed';
+    cursor: pointer;
 
-}
-.mine{
-    background-color: #8a2be2;
 }
 .isShown{
     border-radius: 50px;
 }
-
+.isMine{
+    background-color: aqua;
+}
 .isMarked{
     color:chocolate;
+    background-color: #d6e22b;
+}
+
+.live1, .live2, .live3{
+    margin-right: 10px;
+}
+.heart{
+    height: 30px;
+    width: 30px;
 }

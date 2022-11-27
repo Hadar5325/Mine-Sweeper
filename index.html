@@ -9,12 +9,40 @@
 </head>
 <body onload="initGame()">
     <h1>Mine Sweeper</h1>
-    <button onclick="startGame()" class="start">start</button>
-    <br>
-    <button class="level begginer" onclick="onWhichLevel(this)">Begginer</button>
-    <button class="level medium" onclick="onWhichLevel(this)">Medium</button>
-    <button class="level expert" onclick="onWhichLevel(this)">Expert</button>
-    <table></table>
+    <div class="div-containter">
+        <button onclick="startGame()" class="start">start</button>
+    </div>
+    <div class="div-containter">
+        <img class="smiley" onclick="startGame()" src="./images/viewImage.jfif" alt="smiley">
+    </div>
+    <div class="div-containter">
+        <button class="level begginer" onclick="onWhichLevel(this)">Begginer</button>
+        <button class="level medium" onclick="onWhichLevel(this)">Medium</button>
+        <button class="level expert" onclick="onWhichLevel(this)">Expert</button>
+    </div>
+    <div class="div-containter">
+        <table></table>
+    </div>
+    <div class="div-containter">
+        <div class="lives-idx1 live1">
+            <img class="heart" src="./images/heart.png" alt="heart">
+        </div>
+        <div class="lives-idx2 live2">
+            <img class="heart" src="./images/heart.png" alt="heart">
+        </div>
+        <div class="lives-idx3 live3">
+            <img class="heart" src="./images/heart.png" alt="heart">
+        </div>
+    </div>
+    <div class="div-containter">
+            <button class="safe-click safe1" onclick="onSafeClick()">safe click</button>
+            <button class="safe-click safe2" onclick="onSafeClick()">safe click</button>
+            <button class="safe-click safe3" onclick="onSafeClick()">safe click</button>
+    </div>
+    <div class="div-containter">
+        <h2 class="game-over"></h2>
+    </div>
+    <div class="div-containter footer">Hadar Reuven</div>
     <script src="minSweeper.js"></script>
 </body>
 </html>
