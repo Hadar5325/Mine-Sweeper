@@ -9,7 +9,7 @@ body {
 .div-containter{
     display: flex;
     place-content: center;
-    margin: 15px;
+    margin: 5px;
 }
 
 h1 ,.game-over, .footer{
@@ -82,8 +82,12 @@ table {
 .isShown{
     border-radius: 50px;
 }
-.isMine{
-    background-color: aqua;
+.timer{
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Open Sans Condensed';
 }
 .isMarked{
     color:chocolate;

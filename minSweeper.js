@@ -24,11 +24,13 @@ function initGame() {
 }
 
 function startGame() {
+
     gGame = {
         isOn: true,
         shownCount: 0,
         markedCount: 0,
         secsPassed: 0,
+        numInterval :'',
         numOfLives: 3,
         isFirstClickedLeft: true,
         posOfUserMines: [],
@@ -42,8 +44,17 @@ function startGame() {
     newSafeButtons()
     gBoard = buildBoard()
     gGame.posOfModelMines = putOnBoardRanomMines()
+    countTime()
     // dom
     renderBoard()
+}
+function countTime(){
+    var elTimer = document.querySelector('.timer')
+    gGame.numInterval = setInterval(() => {
+        elTimer.innerHTML = `timer: ${gGame.secsPassed++}`
+        gGame.secsPassed;
+    },1000
+  );
 }
 
 function announceNewGame() {
@@ -164,6 +175,7 @@ function allPosNearCellWithZeroMine(mat, cellI, cellJ) {
 }
 
 function gameIsOver(isUserWinner) {
+    clearInterval(gGame.numInterval)
     var elGameOver = document.querySelector(`.game-over`)
     var elSmiley = document.querySelector(`.smiley`)
 
@@ -173,9 +185,20 @@ function gameIsOver(isUserWinner) {
     } else {
         elGameOver.innerText = 'Game is over, try again!'
         elSmiley.src = './images/smileyLose.webp'
+        gameOverShowingAllMines()
     }
     gGame.isOn = false
-    return
+}
+
+function gameOverShowingAllMines(){
+    console.log(gGame.posOfModelMines)
+    for(var i=0; i<gGame.posOfModelMines.length; i++){
+        var row = gGame.posOfModelMines[i].i
+        var col = gGame.posOfModelMines[i].j
+        const elCell = document.querySelector(`.cell-${row}-${col}`);
+        elCell.classList.add('isMine')
+        elCell.innerText = MINE
+    }
 }
 
 function renderBoard() {
@@ -189,7 +212,7 @@ function renderBoard() {
             var classNameisShown = ''
 
             const cellData = `cell-${i}-${j}`;
-            if (cell.isMine) classNameMine = 'mine'
+            // if (cell.isMine) classNameMine = 'isMine'
             if (cell.isShown) {
                 classNameisShown = 'isShown'
             }
@@ -227,12 +250,13 @@ function onMouseClicked(event, i, j) {
 
 function onLeftCellClicked(cellI, cellJ) {
     const elCell = document.querySelector(`.cell-${cellI}-${cellJ}`);
-
+    if(elCell.classList.contains('isMine')) return
     if (gBoard[cellI][cellJ].isMine) {
         reduceLife()
         var elSmiley = document.querySelector(`.smiley`)
         elSmiley.src = './images/smileyLose.png'
         gGame.posOfUserMines.push({ cellI, cellJ })
+        elCell.classList.add('isMine')
         elCell.innerText = MINE
         checkGameOver()
         return
@@ -285,8 +309,9 @@ function checkGameOver() {
         && ((gGame.markedCount === gLevel.MINES)
             || (numOfWrongchoosenMins === gLevel.MINES))
         && (gGame.shownCount === cellLeftToOpen)) {
-        gameIsOver(true)
-        gGame.isOn = false
+            gameIsOver(true)
+            gameOverShowingAllMines()
+            gGame.isOn = false
     }
 }
 
