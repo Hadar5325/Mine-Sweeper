@@ -30,7 +30,7 @@ function startGame() {
         shownCount: 0,
         markedCount: 0,
         secsPassed: 0,
-        numInterval :'',
+        numInterval :null,
         numOfLives: 3,
         isFirstClickedLeft: true,
         posOfUserMines: [],
@@ -44,7 +44,13 @@ function startGame() {
     newSafeButtons()
     gBoard = buildBoard()
     gGame.posOfModelMines = putOnBoardRanomMines()
-    countTime()
+    console.log(gGame.numInterval)
+    if(gGame.numInterval === null) {
+        clearInterval(gGame.numInterval)
+        gGame.numInterval = null
+        console.log(gGame.numInterval)
+    }
+    countTime() 
     // dom
     renderBoard()
 }
@@ -52,7 +58,7 @@ function countTime(){
     var elTimer = document.querySelector('.timer')
     gGame.numInterval = setInterval(() => {
         elTimer.innerHTML = `timer: ${gGame.secsPassed++}`
-        gGame.secsPassed;
+        // gGame.secsPassed;
     },1000
   );
 }
