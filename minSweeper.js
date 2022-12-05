@@ -67,7 +67,7 @@ function announceNewGame() {
     var elGameOver = document.querySelector(`.game-over`)
     elGameOver.innerText = ''
     var elSmiley = document.querySelector(`.smiley`)
-    elSmiley.src = './images/smileyNormal.png'
+    elSmiley.src = 'smileyNormal.png'
 }
 
 function onWhichLevel(elBtn) {
@@ -187,10 +187,10 @@ function gameIsOver(isUserWinner) {
 
     if (isUserWinner) {
         elGameOver.innerText = 'Game is over, you Win! :)'
-        elSmiley.src = './images/smileyWin.png'
+        elSmiley.src = 'smileyWin.png'
     } else {
         elGameOver.innerText = 'Game is over, try again!'
-        elSmiley.src = './images/smileyLose.webp'
+        elSmiley.src = 'smileyLose.webp'
         gameOverShowingAllMines()
     }
     gGame.isOn = false
@@ -260,7 +260,7 @@ function onLeftCellClicked(cellI, cellJ) {
     if (gBoard[cellI][cellJ].isMine) {
         reduceLife()
         var elSmiley = document.querySelector(`.smiley`)
-        elSmiley.src = './images/smileyLose.png'
+        elSmiley.src = 'smileyLose.png'
         gGame.posOfUserMines.push({ cellI, cellJ })
         elCell.classList.add('isMine')
         elCell.innerText = MINE
@@ -268,7 +268,7 @@ function onLeftCellClicked(cellI, cellJ) {
         return
     }
     var elSmiley = document.querySelector(`.smiley`)
-    elSmiley.src = './images/smileyNormal.png'
+    elSmiley.src = 'smileyNormal.png'
     // update the current cell
     setMinesNegsCount(elCell, cellI, cellJ)
     // update the negs around elCell
